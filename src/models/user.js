@@ -7,7 +7,6 @@ const userSchema = mongoose.Schema(
         firstName : {
             type : String,
             required : true,
-            minLength : 5,
             maxLength : 40
         },
         lastName : {
@@ -40,7 +39,7 @@ const userSchema = mongoose.Schema(
         gender : {
             type : String,
             enum : {
-                values : ["male", "female", "other"],
+                values : ["", "male", "female", "other"],
                 message : `{VALUE} is not correct status type`
             }
         },

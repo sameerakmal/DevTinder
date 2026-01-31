@@ -15,10 +15,12 @@ const validSignUpData = ((req) => {
 
 const validEditProfileData = (req) => {
     const allowedUpdates = ["firstName", "lastName","age", "gender", "photoUrl", "about","skills"];
-    const isEditAllowed = Object.keys(req.body).every((key) => {
+    const isEditAllowed = Object.keys(req.body).every(key => {
         allowedUpdates.includes(key);
     })
+
     console.log(isEditAllowed);
+    
     
     return isEditAllowed;
 }
