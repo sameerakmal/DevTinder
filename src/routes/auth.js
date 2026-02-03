@@ -23,7 +23,7 @@ authRouter.post("/signup",
 
             const token = await savedUser.getJWT();
             res.cookie("token", token, {
-            expires: new Date(Date.now() + 8 * 3600000),
+                expires: new Date(Date.now() + 8 * 3600000),
             });
             
             res.json({message : "User added successfully!!", data : savedUser});
