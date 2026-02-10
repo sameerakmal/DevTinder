@@ -3,6 +3,9 @@ const {validSignUpData} = require("../utils/validation");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const authRouter = express.Router();
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 
 authRouter.post("/signup",
     async (req, res) => {
@@ -21,12 +24,21 @@ authRouter.post("/signup",
             });
             const savedUser = await user.save();
 
+            const msg = {
+                to: emailId,
+                from: "akazakoyuki2gether@gmail.com",
+                subject: "Welcome!",
+                text: `Hi ${firstName}, thanks for signing up!`,
+            };
+
+            await sgMail.send(msg);
+
             const token = await savedUser.getJWT();
             res.cookie("token", token, {
                 expires: new Date(Date.now() + 8 * 3600000),
             });
             
-            res.json({message : "User added successfully!!", data : savedUser});
+            res.json({message : "User added successfully!! + email sent", data : savedUser});
         }
         catch(err){
             res.status(400).send("Error saving the user : " + err.message);
