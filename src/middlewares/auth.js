@@ -8,12 +8,12 @@ const userAuth = async (req, res, next) => {
             res.status(401).send("Please login");
         }
 
-        const decodedObj = await jwt.verify(token, "Sameer@456");
+        const decodedObj = await jwt.verify(token, process.env.JWT_SECRET);
         const {_id} = decodedObj;
 
         const user = await User.findById(_id);
         if(!user){
-            throw new Error("User does not exist! Please sign up");
+            return res.status(404).send("User does not exist! Please sign up");
         }
         req.user = user;
         next();
