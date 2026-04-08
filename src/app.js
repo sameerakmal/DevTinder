@@ -10,6 +10,8 @@ const { profileRouter } = require("./routes/profile");
 const { requestRouter } = require("./routes/request");
 const {userRouter} = require("./routes/user");
 const paymentRouter = require("./routes/payment");
+
+app.use("/payment/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
