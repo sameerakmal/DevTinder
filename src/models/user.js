@@ -58,6 +58,13 @@ const userSchema = mongoose.Schema(
         },
         skills : {
             type : [String]
+        },
+        isPremium : {
+            type : Boolean,
+            default : false
+        },
+        membershipType : {
+            type : String
         }
     },
     {
@@ -71,7 +78,7 @@ userSchema.methods.getJWT = async function(){
 
     const token = await jwt.sign({_id : user._id}, process.env.JWT_SECRET, {
         expiresIn : "7d"
-    });
+    }); 
 
     return token;
 }

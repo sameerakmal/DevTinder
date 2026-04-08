@@ -9,6 +9,7 @@ const {authRouter} = require("./routes/auth");
 const { profileRouter } = require("./routes/profile");
 const { requestRouter } = require("./routes/request");
 const {userRouter} = require("./routes/user");
+const paymentRouter = require("./routes/payment");
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
@@ -22,7 +23,12 @@ app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
 app.use("/", userRouter);
+app.use("/", paymentRouter);
 require("./utils/cronJob");
+
+app.get("/", (req, res) => {
+    res.send("Server is alive");
+});
 
 connectDB()
     .then(() => {
