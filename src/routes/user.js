@@ -88,4 +88,9 @@ userRouter.get("/feed", userAuth, async (req, res) => {
         res.status(400).send("ERROR : " + err.message);
     }
 })
+
+userRouter.get("/user/:id", async(req, res) => {
+    const user = await User.findById(req.params.id);
+    res.json(user);
+})
 module.exports = {userRouter};

@@ -10,6 +10,8 @@ const { profileRouter } = require("./routes/profile");
 const { requestRouter } = require("./routes/request");
 const {userRouter} = require("./routes/user");
 const paymentRouter = require("./routes/payment");
+const http = require("http");
+const initializeSocket = require("./utils/socket");
 
 app.use("/payment/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
@@ -32,10 +34,13 @@ app.get("/", (req, res) => {
     res.send("Server is alive");
 });
 
+const server = http.createServer(app);
+initializeSocket(server);
+
 connectDB()
     .then(() => {
         console.log("Database connection established");
-        app.listen(process.env.PORT, () => {
+        server.listen(process.env.PORT, () => {
             console.log("Server is successfully listening to port no 3000");
         });
     })
